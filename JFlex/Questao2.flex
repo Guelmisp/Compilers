@@ -1,23 +1,25 @@
+/* Lexer example for integers, float, id and operations */
+
 %%
 
-%public
+%standalone
 %class Questao2
-%function token
-%type Token
+%unicode
 %line
+%column
 
 %%
 
 [\n\r\t] { }
 
-[0-9]+ { return new Token(Token.NUM, yytext()); }
+[0-9]+ { System.out.println("INT " + yytext()); }
 
-[.][0-9]+ { return new Token(Token.FLOAT, yytext()); }
+[.][0-9]+ { System.out.println("FLOAT " + yytext()); }
 
-[a-zA-Z]+ { return new Token(Token.ID, yytext()); }
+[a-zA-Z]+ { System.out.println("ID " + yytext()); }
 
-[+]|[-]|[/]|[*]|[(]|[)]|[=] { return new Token(Token.ID, yytext()); }
+[+]|[-]|[/]|[*]|[(]|[)]|[=] { System.out.println("OPERATOR " + yytext()); }
 
-<<EOF>> { return new Token(Token.EOF, "<<EOF>>"); }
+.       { System.out.println("Caracter nao valido" + yytext());}
 
-.       { return new RuntimeException("token nao identificado" + yytext()); }
+<<EOF>> { System.out.println("<<EOF>> "); return 0; }
